@@ -1,0 +1,16 @@
+At this phase in the project, the ASL classifier model could 
+easily become an ensemble model if the predictors were combined.
+Since there are three versions of the CNN and one Dense model, 
+the best performing predictors could be combined using majority 
+class or averaging probabilities for a some class from within the
+set. Useful overfitting is applied in the use of dropout, batch
+normalization, and L2 Regularization as a strategy to mitigate 
+the risk of overfitting for such a relatively small dataset. 
+The best choice for a new design pattern to implement in this case 
+is the Ensemble Design pattern, which will combine results from the 
+best performing models in the experiment to make better predictions 
+about which images represent which letter. Since one model(Dense) 
+showed bad performance, and another displayed signs of model 
+instability(Adam), those two will be left out; but the remaining 
+results from the SGD and MSPROP Convolutional Neural Networks will 
+be combined into an ensemble model. 
