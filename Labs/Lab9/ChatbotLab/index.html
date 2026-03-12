@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>TinyBot</title>
+    <script src="script.js" defer></script>
+    <style>
+      *, *::before, *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: #0f172a;
+        color: #e2e8f0;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 2.5rem 1rem;
+      }
+
+      header {
+        text-align: center;
+        margin-bottom: 2rem;
+      }
+
+      header h1 {
+        font-size: 2.4rem;
+        color: #7dd3fc;
+        letter-spacing: 0.04em;
+      }
+
+      header p {
+        color: #94a3b8;
+        margin-top: 0.5rem;
+        font-size: 0.95rem;
+      }
+
+      .instructions {
+        background: #1e293b;
+        border-left: 4px solid #0ea5e9;
+        border-radius: 0.5rem;
+        padding: 1rem 1.25rem;
+        max-width: 680px;
+        width: 100%;
+        margin-bottom: 1.5rem;
+        font-size: 0.9rem;
+        color: #cbd5e1;
+        line-height: 1.6;
+      }
+
+      .instructions strong {
+        color: #7dd3fc;
+      }
+
+      .chat-card {
+        background: #1e293b;
+        border: 1px solid #334155;
+        border-radius: 1rem;
+        padding: 1.5rem;
+        width: 100%;
+        max-width: 680px;
+        box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+      }
+
+      .input-row {
+        display: flex;
+        gap: 0.5rem;
+        margin-bottom: 1rem;
+      }
+
+      input[type="text"] {
+        flex: 1;
+        padding: 0.65rem 1rem;
+        border-radius: 0.5rem;
+        border: 1px solid #475569;
+        background: #0f172a;
+        color: #e2e8f0;
+        font-size: 1rem;
+        outline: none;
+        transition: border-color 0.2s;
+      }
+
+      input[type="text"]:focus {
+        border-color: #7dd3fc;
+      }
+
+      button {
+        padding: 0.65rem 1.3rem;
+        border-radius: 0.5rem;
+        border: none;
+        background: #0ea5e9;
+        color: #fff;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background 0.2s;
+      }
+
+      button:hover {
+        background: #38bdf8;
+      }
+
+      #loading {
+        font-size: 0.85rem;
+        color: #64748b;
+        margin-bottom: 0.5rem;
+        min-height: 1.2rem;
+      }
+
+      #output {
+        background: #0f172a;
+        border: 1px solid #334155;
+        border-radius: 0.5rem;
+        padding: 1rem;
+        min-height: 120px;
+        font-size: 0.95rem;
+        white-space: pre-wrap;
+        line-height: 1.7;
+        color: #cbd5e1;
+      }
+
+      .suggestions {
+        margin-top: 1.5rem;
+        width: 100%;
+        max-width: 680px;
+      }
+
+      .suggestions h2 {
+        font-size: 0.85rem;
+        color: #64748b;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        margin-bottom: 0.75rem;
+      }
+
+      .chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+      }
+
+      .chip {
+        background: #1e293b;
+        border: 1px solid #334155;
+        border-radius: 999px;
+        padding: 0.4rem 0.9rem;
+        font-size: 0.85rem;
+        color: #94a3b8;
+        cursor: pointer;
+        transition: background 0.15s, color 0.15s;
+      }
+
+      .chip:hover {
+        background: #0ea5e9;
+        color: #fff;
+        border-color: #0ea5e9;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>TinyBot</h1>
+      <p>A locally running AI chatbot powered by Ollama + TinyLlama</p>
+    </header>
+
+    <div class="instructions">
+      <strong>How to use:</strong> Type any question into the box below and click
+      <strong>Send</strong>. TinyBot will send your message to a local Flask server,
+      which passes it to Ollama running on your machine. The response may take a few
+      seconds the first time.
+    </div>
+
+    <div class="chat-card">
+      <div class="input-row">
+        <input type="text" id="chat-message" placeholder="Ask me anything…" />
+        <button onclick="sendMessage()">Send</button>
+      </div>
+      <div id="loading"></div>
+      <pre id="output"></pre>
+    </div>
+
+    <div class="suggestions">
+      <h2>Suggested Prompts</h2>
+      <div class="chips">
+        <span class="chip" onclick="fillPrompt(this)">What should I eat for lunch?</span>
+        <span class="chip" onclick="fillPrompt(this)">Explain how the internet works</span>
+        <span class="chip" onclick="fillPrompt(this)">Write me a haiku about coding</span>
+        <span class="chip" onclick="fillPrompt(this)">What is the request-response cycle?</span>
+        <span class="chip" onclick="fillPrompt(this)">Give me a fun fact</span>
+      </div>
+    </div>
+
+    <script>
+      function fillPrompt(el) {
+        document.querySelector("#chat-message").value = el.textContent;
+      }
+    </script>
+  </body>
+</html>
